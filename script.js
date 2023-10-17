@@ -24,7 +24,6 @@ const snake = [
     {x: 300, y: 180}
 ]
 
-
 const drawFood = () => {
     ctx.fillStyle = food.color
     ctx.fillRect(food.x, food.y, size, size)
@@ -96,10 +95,21 @@ const checkEat = () => {
     }
 }
 
+const gameOver = () => {
+    direction = undefined
+}
+
 const checkCollision = () => {
     const head = snake[snake.length - 1]
+    const neckIndex = snake.length - 2
 
-    if (head.x < -30 || head.x > (canvas.width) || head.y < -30 || head.y > (canvas.width)) {
+    const wallCollision = head.x < -30 || head.x > (canvas.width) || head.y < -30 || head.y > (canvas.width)
+    const selfCollision = snake.find((position, index) => {
+        return index < neckIndex && position.x == head.x && position.y == head.y
+    })
+
+
+    if (wallCollision || selfCollision) {
         alert('você perdeu')
     }
 
